@@ -1,1 +1,52 @@
 # notification_flutter
+
+  void _initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  void _showNotification(String title, String body) async {
+    String elapsedTime = TimerUtil.formatTime(_stopwatch.elapsedMilliseconds);
+    body = '$body\nElapsed Time: $elapsedTime';
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      '1',
+      'Timesheet App',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      enableVibration: false,
+      playSound: false,
+      allowWhileIdle: true,
+      actions: [
+        const AndroidNotificationAction(
+          'star_action', 
+          'Star', 
+          icon: '@mipmap/star_icon', // Specify the icon for Star action
+          importance: Importance.max,
+          priority: Priority.high,
+        ),
+        AndroidNotificationAction(
+          'stop_time_action', 
+          'Stop Time', 
+          icon: '@mipmap/stop_time_icon', // Specify the icon for Stop Time action
+          importance: Importance.max,
+          priority: Priority.high,
+        ),
+      ],
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+    );
+  }
