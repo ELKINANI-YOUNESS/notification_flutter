@@ -1,4 +1,5 @@
-# notification_flutter
+
+
 
   void _initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -11,7 +12,6 @@
   void _showNotification(String title, String body) async {
     String elapsedTime = TimerUtil.formatTime(_stopwatch.elapsedMilliseconds);
     body = '$body\nElapsed Time: $elapsedTime';
-
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       '1',
@@ -39,10 +39,8 @@
         ),
       ],
     );
-
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
-
     await flutterLocalNotificationsPlugin.show(
       0,
       title,
